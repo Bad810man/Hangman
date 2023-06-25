@@ -4,7 +4,7 @@ wins = 0
 loses = 0
 
 def play():
-    words = ['python', 'java', 'swift', 'javascript']
+    words = ['python', 'java', 'swift', 'javascript', 'fortran', 'kotlin', 'ruby', 'perl', 'go', 'rust', 'typescript', 'php', 'scala', 'delphi']
     program_word = random.choice(words)
     hint = list("-" * len(program_word))
     guessed_letters = set()
