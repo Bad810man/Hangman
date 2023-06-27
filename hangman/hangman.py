@@ -3,11 +3,7 @@ import random
 wins = 0
 loses = 0
 
-def play():
-    with open('words.txt', 'r') as file:
-        words = file.read()
-        words = words.split(', ')
-
+def play(words):
     program_word = random.choice(words)
     hint = list("-" * len(program_word))
     guessed_letters = set()
@@ -39,13 +35,14 @@ def play():
             print("")
             print(f"You guessed the word {program_word}!")
             print("You survived!")
-            return 1
+            return program_word
             break
 
         if attempts == 0:
-            print("You lost!")
             print(f"The word was {program_word}")
-            return 0
+            print("You lost!\n")
+            return ""
+            break
 
         print("\n")
 
@@ -54,17 +51,26 @@ def score(count_wins, count_loses):
     print(f"You lost: {count_loses} times.")
 
 print("H A N G M A N\n")
+with open('words.txt', 'r') as file:
+        words = file.read()
+        words = words.split(', ')
 while True:
     choice = input('Type "play" to play the game, "results" to show the scoreboard, and "exit" to quit: ')
 
     if choice == "play":
         print("")
-        result = play()
-        if result == 1:
-            wins += 1
-        else:
+        result = play(words)
+        if result == "":
             loses += 1
+        else:
+            words.remove(result)
+            print(f"Remaining words: {len(words)}")
+            wins += 1
     elif choice == "results":
         score(wins, loses)
     elif choice == "exit":
         break
+
+    if len(words) == 0:
+        print("You've guessed all words. Congratulations!")
+        exit()
